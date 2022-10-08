@@ -6,6 +6,7 @@ import { Login } from "../components/Login/Login";
 import { Project } from "../components/project/Project";
 import { ProjectDetails } from "../components/project/ProjectDetails";
 import { Register } from "../components/Register/Register";
+import { Task } from "../components/Task/Task";
 
 export const RouterApp: React.FC = () => {
   return (
@@ -19,6 +20,7 @@ export const RouterApp: React.FC = () => {
         <Route path="/projects/:user_id/:project_id" element={ <ProjectDetails /> }/>
         <Route path="/collab/:user_id" element={ <Collab /> } />
         <Route path="/collab_register/:user_id" element={ <CollabForm /> } />
+        <Route path="/tasks/:user_id/:project_id/:task_id" element={ <Task /> } />
       </Routes>
     </BrowserRouter>
   )

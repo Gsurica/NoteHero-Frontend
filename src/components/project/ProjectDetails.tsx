@@ -4,6 +4,7 @@ import moment from 'moment';
 import axios from 'axios';
 import { Button } from '../../shared/components/Button/Button';
 import { Modal } from '../../shared/components/modal/Modal';
+import { TaskList } from './components/TaskList';
 
 export const ProjectDetails = () => {
 
@@ -81,42 +82,7 @@ export const ProjectDetails = () => {
         <div className="flex items-center justify-center h-10 bg-orange-200 mt-6">
           <h1 className="font-bold tracking-widest text-slate-600">Tasks!</h1>
         </div>
-        { project.tasks?.map((task: any) => {
-          return (
-            <div className="bg-slate-400" key={ task.id }>
-              <div className="flex items-center justify-center mt-6 text-white">
-                <h1>{ task.name }</h1>
-              </div>
-              <div className="flex items-center justify-center p-2">
-                <p className="tracking-wide bg-white p-2">{ task.description }</p>
-              </div>
-              { task.collaborator.length === 0 ? (
-                <div className="flex items-center justify-center flex-col">
-                  <p className="text-white tracking-widest">No collaborators yet! :(</p>
-                  <div className="mt-2 mb-2">
-                    <Button name="Register one collab to the task!" onClick={() => {}} />
-                  </div>
-                </div>
-                ): (
-                  <div className="flex items-center flex-col">
-                    <div className="flex items-center mb-4 mt-4 text-white">
-                      <h1 className="tracking-widest">Collaborators: </h1>
-                    </div>
-                    <div>
-                      { task.collaborator?.map((collaborator: any) => {
-                        return (
-                          <div key={ collaborator.id } className="text-orange-200">
-                            <p className="text-lg mb-4 p-2 bg-slate-600">{ collaborator.name }</p>
-                          </div>
-                        )
-                      }) }
-                    </div>
-                  </div>
-                ) }
-                
-            </div>
-          ) 
-        }) }
+        <TaskList />
       </div>
       <div className="flex items-center justify-center mb-4 mt-4">
         <Button name="Create a new task to the project!" onClick={() => showModal(2)} />
@@ -144,7 +110,7 @@ export const ProjectDetails = () => {
           ) }
         </>
       </div>
-      <div className="flex items-center justify-around mt-6">
+      <div className="flex items-center justify-around mt-6 mb-4">
         <Button onClick={() => deleteProject()} name="Delete" className="bg-red-500" />
         <Button name="Edit" className="bg-blue-300" onClick={() => showModal(1)} />
       </div>

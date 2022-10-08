@@ -1,6 +1,6 @@
 import { Button } from '../Button/Button';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 interface ModalProps {
@@ -14,32 +14,33 @@ interface ModalProps {
 
 export const Modal: React.FC<ModalProps> = ({ modalTitle, closeModal, editModal, creationModal, children }) => {
 
-  if( editModal ) {
-    const { user_id, project_id } = useParams();
-  
-    const [projectNewName, setProjectNewName] = useState("");
-  
-    const token = localStorage.getItem('tokenAccess');
-  
-    const editProject = () => {
-      axios.put(`http://localhost:3333/projects/${user_id}/${project_id}`, {
-        newName: projectNewName,
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'authorization': 'Bearer ' + token,
-        }
+  const { user_id, project_id } = useParams();
+
+  const [projectNewName, setProjectNewName] = useState("");
+
+  const token = localStorage.getItem('tokenAccess');
+
+  const editProject = () => {
+    axios.put(`http://localhost:3333/projects/${user_id}/${project_id}`, {
+      newName: projectNewName,
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer ' + token,
+      }
+    })
+      .then(response => {
+        console.log('User edit! ', response.data);
+        closeModal();
+        window.location.reload();
       })
-        .then(response => {
-          console.log('User edit! ', response.data);
-          closeModal();
-          window.location.reload();
-        })
-        .catch(err => {
-          console.log('error', err.message);
-          alert(err.response.data.message);
-        })
-    }
+      .catch(err => {
+        console.log('error', err.message);
+        alert(err.response.data.message);
+      })
+  }
+
+  if( editModal ) {
   
     return (
       <div className="bg-zinc-200 bg-opacity-80 fixed insert-0 z-50">
@@ -66,56 +67,50 @@ export const Modal: React.FC<ModalProps> = ({ modalTitle, closeModal, editModal,
     )
   }
 
-  if( creationModal ) {
+  const [taskName, setTaskName] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
+  const [user, setUser] = useState<any>([]);
+  const [collab, setCollab] = useState('');
 
-    const token = localStorage.getItem('tokenAccess');
-    const { user_id, project_id } = useParams();
-
-    const [taskName, setTaskName] = useState('');
-    const [taskDescription, setTaskDescription] = useState('');
-    const [user, setUser] = useState<any>([]);
-    const [collab, setCollab] = useState('');
-
-    useEffect(() => {
-      axios.get(`http://localhost:3333/user/${user_id}`, {
-        headers: {
-          'Content-type': 'application/json',
-          'authorization': 'Bearer ' + token
-        }
-      })
-        .then(response => {
-          console.log(response.data);
-          setUser(response.data);
-        })
-        .catch(err => {
-          console.log(err.message);
-        })
-    }, []);
-
-    const createNewtask = () => {
-      axios.post(`http://localhost:3333/tasks/${user_id}/${project_id}`, {
-      description: taskDescription,
-      task_name: taskName,
-      collab_id: collab,
-    }, {
+  useEffect(() => {
+    axios.get(`http://localhost:3333/user/${user_id}`, {
       headers: {
-        'Content-Type': 'application/json',
-        'authorization': 'Bearer ' + token,
+        'Content-type': 'application/json',
+        'authorization': 'Bearer ' + token
       }
     })
       .then(response => {
-        console.log('User post! ', response.data);
-        closeModal();
-        window.location.reload();
+        console.log(response.data);
+        setUser(response.data);
       })
       .catch(err => {
-        console.log('error', err.response.data)
+        console.log(err.message);
       })
+  }, []);
+
+  const createNewtask = () => {
+    axios.post(`http://localhost:3333/tasks/${user_id}/${project_id}`, {
+    description: taskDescription,
+    task_name: taskName,
+    collab_id: collab,
+  }, {
+    headers: {
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer ' + token,
     }
+  })
+    .then(response => {
+      console.log('User post! ', response.data);
+      closeModal();
+      window.location.reload();
+    })
+    .catch(err => {
+      console.log('error', err.response.data)
+    })
+  }
 
-  console.log(collab);
-  
-
+  if( creationModal ) {
+    
     return (
       <div className="bg-zinc-200 bg-opacity-80 fixed insert-0 z-50">
         <div className="flex h-screen w-screen justify-center items-center">
@@ -135,7 +130,7 @@ export const Modal: React.FC<ModalProps> = ({ modalTitle, closeModal, editModal,
                 <option id="collaborators">Select</option>
                 { user.collaborators?.map((collaborator: any) => {
                   return (
-                    <option key={collaborator.id} id={ collaborator.id } value={ collaborator.id }>{ collaborator.name }</option>
+                    <option key={ collaborator.id } id={ collaborator.id } value={ collaborator.id }>{ collaborator.name }</option>
                   )
                 }) }
               </select>
