@@ -105,6 +105,8 @@ export const Modal: React.FC<ModalProps> = ({ modalTitle, closeModal, editModal,
     })
       .then(response => {
         console.log('User post! ', response.data);
+        closeModal();
+        window.location.reload();
       })
       .catch(err => {
         console.log('error', err.response.data)
