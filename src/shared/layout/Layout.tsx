@@ -1,6 +1,5 @@
 import { Footer } from "../components/Footer/Footer";
 import { Header } from "../components/Header/Header";
-import { useAppSelector, RootState } from "../../app/features/store";
 
 interface LayoutProps {
   children: any;
