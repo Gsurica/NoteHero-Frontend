@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Navigate, Route } from "react-router-dom";
+import { Collab } from "../components/collabs/Collab";
+import { CollabForm } from "../components/collabs/components/CollabForm";
 import { Home } from "../components/home/Home";
 import { Login } from "../components/Login/Login";
 import { Project } from "../components/project/Project";
@@ -15,6 +17,8 @@ export const RouterApp: React.FC = () => {
         <Route path="/register" element={ <Register /> } />
         <Route path="/project/:user_id" element={ <Project /> } />
         <Route path="/projects/:user_id/:project_id" element={ <ProjectDetails /> }/>
+        <Route path="/collab/:user_id" element={ <Collab /> } />
+        <Route path="/collab_register/:user_id" element={ <CollabForm /> } />
       </Routes>
     </BrowserRouter>
   )
