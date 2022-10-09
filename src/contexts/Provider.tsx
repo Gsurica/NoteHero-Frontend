@@ -1,6 +1,6 @@
 import { ReactNode, useCallback, useReducer } from "react"
 import { AppContextActions } from "../enums/AppContextActions";
-import { AppContext, INITIAL_STATE } from "./auth"
+import { AppContext, INITIAL_STATE } from "./context";
 import { appContextReducer } from "./reducer/reducer";
 
 interface CtxProps {
@@ -24,11 +24,40 @@ export const AppContextProvider: React.FC<CtxProps> = ({ children }) => {
     })
   }, [dispatch])
 
+  const ShowModal = useCallback(() => {
+    return dispatch({
+      type: AppContextActions.Modal,
+    });
+  }, [dispatch]);
+
+  const CloseModal = useCallback(() => {
+    return dispatch({
+      type: AppContextActions.CloseModal,
+    });
+  }, [dispatch]);
+
+  const ShowTimeTrackerModal = useCallback(() => {
+    return dispatch({
+      type: AppContextActions.ShowTimeTrackerModal,
+    });
+  }, [dispatch]);
+
+  const CloseTimeTrackerModal = useCallback(() => {
+    return dispatch({
+      type: AppContextActions.CloseTimeTrackerModal,
+    });
+  }, [dispatch]);
+
+
   return (
     <AppContext.Provider value={{
       state,
       LogIn,
-      LogOut
+      LogOut,
+      ShowModal,
+      CloseModal,
+      ShowTimeTrackerModal,
+      CloseTimeTrackerModal
     }}>
       { children }
     </AppContext.Provider>

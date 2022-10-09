@@ -1,13 +1,9 @@
-import { useNavigate } from 'react-router-dom';
-
 interface CollabProps {
   name: string;
   registerDate: string;
 }
 
 export const CollabCard: React.FC<CollabProps> = ({ name, registerDate }) => {
-
-  const redirect = useNavigate();
 
   return (
     <div className="flex items-center justify-center">

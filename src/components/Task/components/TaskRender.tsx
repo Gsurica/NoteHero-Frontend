@@ -4,20 +4,18 @@ import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { Button } from '../../../shared/components/Button/Button';
 import { TaskModal } from '../../../shared/components/modal/TaskModal/TaskModal';
+import { useAppContext } from '../../../contexts/hooks/useAppContext';
 
 export const TaskRender: React.FC = () => {
 
   const [task, setTask] = useState<any>([]);
-  const [modal, setModal] = useState(false);
+
+  const { ShowTimeTrackerModal, ShowModal } = useAppContext();
 
   const { user_id, project_id, task_id } = useParams();
   const token = localStorage.getItem('tokenAccess');
 
   const redirect = useNavigate();
-
-  const showModal = () => {
-    setModal(true);
-  }
 
   useEffect(() => {
     axios.get(`http://localhost:3333/tasks/${user_id}/${project_id}/${task_id}`, {
@@ -55,23 +53,16 @@ export const TaskRender: React.FC = () => {
 
   return (
     <>
-    { modal && (
-      <TaskModal closeModal={() => setModal(false)} modalTitle="Edit your task!">
-        <div className="flex items-center justify-center">
-          <h1 className="tracking-widest font-bold">Edit your task!</h1>
-        </div>
-      </TaskModal>
-    ) }
     <div className="flex p-4 flex-col items-center justify-center">
       <div className="flex items-center flex-col justify-center">
         <h1 className="tracking-widest text-3xl italic p-4 bg-orange-300 rounded-lg">{ task?.name }</h1>
         <p className="p-4 bg-slate-300 text-white mt-4 rounded-lg">{ task?.description }</p>
       </div>
       <div className="mt-2 animate-pulse">
-        <h3 className="tracking-wide bg-slate-100 p-1">Task connected with { task?.project?.name }</h3>
+        <h3 className="tracking-wide p-1 mt-4 mb-4">Task connected with { task?.project?.name }</h3>
       </div>
       <div className="justify-end">
-        <h2 className="text-sm">Task created at { moment(task?.created_at).format('DD/MM/YYYY') }</h2>
+        <h2 className="text-sm font-bold tracking-widest">Task created at { moment(task?.created_at).format('DD/MM/YYYY') }</h2>
       </div>
       <div className="mt-4 p-4">
         <div className="bg-slate-300 flex items-center justify-center flex-col">
@@ -95,10 +86,14 @@ export const TaskRender: React.FC = () => {
           </div>
         </div>
       </div>
+      <div className="flex items-center justify-center flex-col">
+        <Button name="Create timetracker for this task!" onClick={() => ShowTimeTrackerModal()}/>
+        <p className="w-60 mt-4 bg-orange-100 p-2">Create time trackers for your best time management!</p>
+      </div>
     </div>
-    <div className="flex items-center justify-around mb-6">
-      <Button name="Delete!" onClick={() => deleteTask()} />
-      <Button name="Edit!" onClick={() => showModal()} />
+    <div className="flex items-center justify-around mb-6 md:justify-evenly">
+      <Button name="Delete!" onClick={() => deleteTask()} className="md:text-2xl" />
+      <Button name="Edit!" onClick={() => ShowModal()} className="md:text-2xl" />
     </div>
     </>
   )
