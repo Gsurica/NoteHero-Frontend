@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Button } from '../../shared/components/Button/Button';
 import { Modal } from '../../shared/components/modal/Modal';
 import { TaskList } from './components/TaskList';
+import { Layout } from '../../shared/layout/Layout';
 
 export const ProjectDetails = () => {
 
@@ -71,50 +72,52 @@ export const ProjectDetails = () => {
       { createModalOn && (
         <Modal editModal={ false } creationModal={ true } modalTitle='Create a new Task!' closeModal={() => setCreateodalOn(false)} />
       )}
-    <div>
-      <div className="flex items-center justify-center bg-orange-100">
-        <h1 className="font-bold text-3xl">{ project.name }</h1>
-      </div>
-      <div className="flex flex-row-reverse">
-        <h2 className="text-sm p-2 bg-slate-200 mt-2 rounded-lg"> criado em: { moment(project.created_at).format("DD/MM/YYYY hh:mm:ss") }</h2>
-      </div>
+    <Layout phrase='Project details!'>
       <div>
-        <div className="flex items-center justify-center h-10 bg-orange-200 mt-6">
-          <h1 className="font-bold tracking-widest text-slate-600">Tasks!</h1>
+        <div className="flex items-center justify-center bg-orange-100">
+          <h1 className="font-bold text-3xl">{ project.name }</h1>
         </div>
-        <TaskList />
+        <div className="flex flex-row-reverse">
+          <h2 className="text-sm p-2 bg-slate-200 mt-2 rounded-lg"> criado em: { moment(project.created_at).format("DD/MM/YYYY hh:mm:ss") }</h2>
+        </div>
+        <div>
+          <div className="flex items-center justify-center h-10 bg-orange-200 mt-6">
+            <h1 className="font-bold tracking-widest text-slate-600">Tasks!</h1>
+          </div>
+          <TaskList />
+        </div>
+        <div className="flex items-center justify-center mb-4 mt-4">
+          <Button name="Create a new task to the project!" onClick={() => showModal(2)} />
+        </div>
+        <div className="mt-4 p-4 bg-slate-200 flex items-center justify-center">
+          <h1>Time Trackers!</h1>
+          <>
+            { project.timetrackers?.length === 0 ? (
+              <div className="flex items-center justify-center">
+                <p className="text-white tracking-widest">No collaborators yet! :(</p>
+              </div>
+            ): (
+              <p>
+                { project.timetrackers?.map((timetrackers: any) => {
+                  return (
+                  <>
+                    <div className="flex items-center justify-center flex-col">
+                      <p> { timetrackers.startDate } </p>
+                      <p> { timetrackers.endDate } </p>
+                    </div>
+                  </>
+                  )
+                }) }
+              </p>
+            ) }
+          </>
+        </div>
+        <div className="flex items-center justify-around mt-6 mb-4">
+          <Button onClick={() => deleteProject()} name="Delete" className="bg-red-500" />
+          <Button name="Edit" className="bg-blue-300" onClick={() => showModal(1)} />
+        </div>
       </div>
-      <div className="flex items-center justify-center mb-4 mt-4">
-        <Button name="Create a new task to the project!" onClick={() => showModal(2)} />
-      </div>
-      <div className="mt-4 p-4 bg-slate-200 flex items-center justify-center">
-        <h1>Time Trackers!</h1>
-        <>
-          { project.timetrackers?.length === 0 ? (
-            <div className="flex items-center justify-center">
-              <p className="text-white tracking-widest">No collaborators yet! :(</p>
-            </div>
-          ): (
-            <p>
-              { project.timetrackers?.map((timetrackers: any) => {
-                return (
-                <>
-                  <div className="flex items-center justify-center flex-col">
-                    <p> { timetrackers.startDate } </p>
-                    <p> { timetrackers.endDate } </p>
-                  </div>
-                </>
-                )
-              }) }
-            </p>
-          ) }
-        </>
-      </div>
-      <div className="flex items-center justify-around mt-6 mb-4">
-        <Button onClick={() => deleteProject()} name="Delete" className="bg-red-500" />
-        <Button name="Edit" className="bg-blue-300" onClick={() => showModal(1)} />
-      </div>
-    </div>
+    </Layout>
     </>
   )
 }

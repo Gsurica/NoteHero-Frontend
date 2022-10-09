@@ -37,6 +37,9 @@ export const ProjectForm = () => {
 
   return (
     <div className="flex h-screen flex-col justify-center p-4">
+      <div className="flex items-center justify-center flex-col">
+        <h1 className="font-bold tracking-widest">Create Project!</h1>
+      </div>
       <form onSubmit={e => {
         e.preventDefault();
         createProject();
