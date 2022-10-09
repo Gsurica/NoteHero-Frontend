@@ -2,11 +2,13 @@ import { Button } from '../../../shared/components/Button/Button';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAppContext } from '../../../contexts/hooks/useAppContext';
 
 export const LoginForm = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { LogIn } = useAppContext();
 
   const redirect = useNavigate();
 
@@ -41,7 +43,7 @@ export const LoginForm = () => {
               <input name="password" id="password" type="password" placeholder="password" className="p-1 mt-5" value={ password } onChange={e => setPassword(e.target.value)} />
             </div>
             <div className="flex justify-center items-center">
-              <Button name="Login!" />
+              <Button name="Login!" onClick={ () => LogIn() } />
             </div>
           </div>
         </form>

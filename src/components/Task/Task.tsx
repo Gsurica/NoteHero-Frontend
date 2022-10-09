@@ -6,7 +6,9 @@ import { TaskRender } from "./components/TaskRender"
 export const Task = () => {
   return (
     <Layout phrase="task view!" >
-      <TaskRender />
+      <div>
+        <TaskRender />
+      </div>
     </Layout>
   )
 }

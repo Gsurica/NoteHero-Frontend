@@ -1,6 +1,6 @@
-import { SubHeaders } from "../../shared/components/SubHeaders/SubHeaders"
-import { Title } from "../../shared/components/TitleHeader/Title"
-import { LoginForm } from "./components/LoginForm"
+import { SubHeaders } from "../../shared/components/SubHeaders/SubHeaders";
+import { Title } from "../../shared/components/TitleHeader/Title";
+import { LoginForm } from "./components/LoginForm";
 
 export const Login: React.FC = () => {
   return (

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { Button } from '../../../shared/components/Button/Button';
@@ -12,6 +12,8 @@ export const TaskRender: React.FC = () => {
 
   const { user_id, project_id, task_id } = useParams();
   const token = localStorage.getItem('tokenAccess');
+
+  const redirect = useNavigate();
 
   const showModal = () => {
     setModal(true);
@@ -33,6 +35,23 @@ export const TaskRender: React.FC = () => {
     })
 
   }, []);
+
+  const deleteTask = () => {
+    axios.delete(`http://localhost:3333/tasks/${user_id}/${project_id}/${task_id}`, {
+      headers: {
+        'Content-type': 'application/json',
+        'authorization': 'Bearer ' + token,
+      }
+    })
+      .then(response => {
+        console.log('deleted task', response.data);
+        alert('Task deleted!');
+        redirect(`/projects/${user_id}/${project_id}`);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   return (
     <>
@@ -78,7 +97,7 @@ export const TaskRender: React.FC = () => {
       </div>
     </div>
     <div className="flex items-center justify-around mb-6">
-      <Button name="Delete!" />
+      <Button name="Delete!" onClick={() => deleteTask()} />
       <Button name="Edit!" onClick={() => showModal()} />
     </div>
     </>
