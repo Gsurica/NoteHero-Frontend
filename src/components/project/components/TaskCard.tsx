@@ -17,13 +17,13 @@ export const TaskCard: React.FC<TaskCardProps> = ({ taskDescription, taskId, tas
   return (
     <div className="bg-slate-400" key={ taskId }>
       <div className="flex items-center justify-center mt-6 text-white">
-        <h1>{ taskName }</h1>
+        <h1 className="md:text-4xl mb-4 mt-4">{ taskName }</h1>
       </div>
       <div className="flex items-center justify-center p-2">
-        <p className="tracking-wide bg-white p-2">{ taskDescription }</p>
+        <p className="tracking-wide bg-white p-2 md:text-3xl">{ taskDescription }</p>
       </div>
         <div className="mt-2 mb-2 flex items-center justify-center">
-          <Button name="View Task!" onClick={() => redirect(`/tasks/${user_id}/${project_id}/${taskId}`)} />
+          <Button name="View Task!" onClick={() => redirect(`/tasks/${user_id}/${project_id}/${taskId}`)} className="md:text-2xl" />
         </div>
         { task.collaborator.length === 0 ? (
           <div className="flex items-center justify-center flex-col">

@@ -59,10 +59,10 @@ export const TaskRender: React.FC = () => {
         <p className="p-4 bg-slate-300 text-white mt-4 rounded-lg">{ task?.description }</p>
       </div>
       <div className="mt-2 animate-pulse">
-        <h3 className="tracking-wide bg-slate-100 p-1">Task connected with { task?.project?.name }</h3>
+        <h3 className="tracking-wide p-1 mt-4 mb-4">Task connected with { task?.project?.name }</h3>
       </div>
       <div className="justify-end">
-        <h2 className="text-sm">Task created at { moment(task?.created_at).format('DD/MM/YYYY') }</h2>
+        <h2 className="text-sm font-bold tracking-widest">Task created at { moment(task?.created_at).format('DD/MM/YYYY') }</h2>
       </div>
       <div className="mt-4 p-4">
         <div className="bg-slate-300 flex items-center justify-center flex-col">
@@ -91,9 +91,9 @@ export const TaskRender: React.FC = () => {
         <p className="w-60 mt-4 bg-orange-100 p-2">Create time trackers for your best time management!</p>
       </div>
     </div>
-    <div className="flex items-center justify-around mb-6">
-      <Button name="Delete!" onClick={() => deleteTask()} />
-      <Button name="Edit!" onClick={() => ShowModal()} />
+    <div className="flex items-center justify-around mb-6 md:justify-evenly">
+      <Button name="Delete!" onClick={() => deleteTask()} className="md:text-2xl" />
+      <Button name="Edit!" onClick={() => ShowModal()} className="md:text-2xl" />
     </div>
     </>
   )

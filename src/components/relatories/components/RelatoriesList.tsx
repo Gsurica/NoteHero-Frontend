@@ -1,6 +1,9 @@
+import { RelatoriesCard } from "./RelatoriesCard"
 
 export const RelatoriesList = () => {
   return (
-    <div>RelatoriesList</div>
+    <div>
+      <RelatoriesCard />
+    </div>
   )
 }

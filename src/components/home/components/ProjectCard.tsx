@@ -18,7 +18,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ projectDescription, pr
     <div className="flex items-center justify-center">
       <button onClick={() => redirect(`/projects/${user_id}/${projectId}`)}>
         <div className="p-4">
-          <div className="bg-slate-600 p-4 flex flex-col mb-5">
+          <div className="bg-slate-600 md:w-96 hover:scale-110 shadow-xl transition-all p-4 flex flex-col mb-5">
             <div className="text-white">
               <h1>{ projectTitle }</h1>
               <p>{ projectDescription }</p>

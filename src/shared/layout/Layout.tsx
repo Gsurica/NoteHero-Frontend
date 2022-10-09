@@ -19,10 +19,6 @@ export const Layout: React.FC<LayoutProps> = ({ children, phrase }) => {
     setMenuOpen(!menuOpen);
   }
 
-  const { state } = useAppContext();
-  const redirect = useNavigate();
-
-
   return (
     <>
       <div>
@@ -32,7 +28,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, phrase }) => {
           </div>
         ) }
         <div className="p-2 bg-slate-600 text-white">
-          <h1>{ phrase }</h1>
+          <h1 className="md:text-2xl" >{ phrase }</h1>
         </div>
         <div>
           <Header isOpen={() => showMenu()} />

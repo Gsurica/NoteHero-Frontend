@@ -62,54 +62,70 @@ export const ProjectDetails = () => {
   }
 
   return (
-    <>
-      { editModalOn && (
-        <Modal creationModal={ false } editModal={ true } modalTitle='Edit your project!' closeModal={() => setEditModalOn(false)}>
-          Choose your project's new name!
-        </Modal>
-      ) }
-
-      { createModalOn && (
-        <Modal editModal={ false } creationModal={ true } modalTitle='Create a new Task!' closeModal={() => setCreateModalOn(false)} />
-      )}
-
-    <Layout phrase='Project details!'>
+    <div>
       <div>
-        <div className="flex items-center justify-center bg-orange-100">
-          <h1 className="font-bold text-3xl">{ project.name }</h1>
-        </div>
-        <div className="flex flex-row-reverse">
-          <h2 className="text-sm p-2 bg-slate-200 mt-2 rounded-lg"> created at: { moment(project.created_at).format("DD/MM/YYYY hh:mm:ss") }</h2>
-        </div>
+        { editModalOn && (
+          <Modal creationModal={ false } editModal={ true } modalTitle='Edit your project!' closeModal={() => setEditModalOn(false)}>
+            Choose your project's new name!
+          </Modal>
+        ) }
+
+        { createModalOn && (
+          <Modal editModal={ false } creationModal={ true } modalTitle='Create a new Task!' closeModal={() => setCreateModalOn(false)} />
+        )}
+
         <div>
-          <div className="flex items-center justify-center h-10 bg-orange-200 mt-6">
-            <h1 className="font-bold tracking-widest text-slate-600">Tasks!</h1>
-          </div>
-          <TaskList />
-        </div>
-        <div className="flex items-center justify-center mb-4 mt-4">
-          <Button name="Create a new task to the project!" onClick={() => showModal(2)} />
-        </div>
-        <div className="mt-4 p-4 bg-slate-200 flex items-center justify-center">
-          <h1>Time Trackers!</h1>
-          { project.tasks?.map((task: any) => {
-            { task.timetrackers?.length === 0 ? (
-              <div className="flex items-center flex-col justify-center p-4">
-                <h1 className="text-white tracking-widest">No collaborators here!</h1>
+          <Layout phrase='Project details!'>
+            <div className="md:p-20">
+              <div className="flex items-center justify-center shadow-lg bg-orange-100">
+                <h1 className="font-bold text-3xl">{ project.name }</h1>
               </div>
-            ): (
-              task.timetrackers?.map((timetracker: any) => {
-                
-              })
-            ) }
-          }) }
-        </div>
-        <div className="flex items-center justify-around mt-6 mb-4">
-          <Button onClick={() => deleteProject()} name="Delete" className="bg-red-500" />
-          <Button name="Edit" className="bg-blue-300" onClick={() => showModal(1)} />
+              <div className="flex flex-row-reverse">
+                <h2 className="text-sm p-2 bg-slate-200 mt-2 rounded-lg"> created at: { moment(project.created_at).format("DD/MM/YYYY hh:mm:ss") }</h2>
+              </div>
+              <div>
+                <div className="flex items-center justify-center h-10 bg-orange-200 mt-6">
+                  <h1 className="font-bold tracking-widest text-slate-600">Tasks!</h1>
+                </div>
+                <TaskList />
+              </div>
+              <div className="flex items-center justify-center mb-4 mt-4">
+                <Button name="Create a new task to the project!" onClick={() => showModal(2)} className="md:text-2xl" />
+              </div>
+              <div className="mt-4 p-4 bg-slate-200 flex items-center justify-center flex-col">
+                <h1>Time Trackers!</h1>
+                { project.tasks?.map((task: any) => {
+                  return (
+                    task.timetrackers?.map((timetrackers: any) => {
+                      return (
+                        <>
+                          <div className="p-4 bg-orange-100 rounded-lg flex items-center justify-center flex-col mt-6 border-b-orange-300">
+                            <p>Started: { moment(timetrackers.startDate).format("DD/MM/YYYY hh:mm:ss") }</p>
+                            <p>Ended: { moment(timetrackers.endDate).format("DD/MM/YYYY hh:mm:ss") }</p>
+                            <p className="mt-4"> { timetrackers.TimeZoneId } </p>
+                          </div>
+                          <div className="flex items-center justofy-center flex-col mt-5">
+                            <h1 className="font-bold text-xl tracking-widest p-2 bg-orange-100 mb-4">Collaborator with time tracker</h1>
+                            <p className="p-2 text-xl bg-slate-600 text-orange-200">{ timetrackers.collaborator.name }</p>
+                          </div> 
+                          <div className="flex items-center justify-center flex-col">
+                            <h1 className="font-bold text-xl tracking-widest p-2 bg-orange-100 mb-4 mt-4">Task with time tracker</h1>
+                            <p className="p-2 text-xl bg-slate-600 text-orange-200">{ timetrackers.task.name }</p>
+                          </div>
+                        </>
+                      )
+                    })
+                  )
+                }) }
+              </div>
+              <div className="flex items-center justify-around mt-6 mb-4">
+                <Button onClick={() => deleteProject()} name="Delete" className="bg-red-500 md:text-3xl" />
+                <Button name="Edit" className="bg-blue-300 md:text-3xl" onClick={() => showModal(1)} />
+              </div>
+            </div>
+          </Layout>
         </div>
       </div>
-    </Layout>
-    </>
+    </div>
   )
 }

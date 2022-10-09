@@ -21,19 +21,20 @@ export const Header: React.FC<HeaderProps> = ({ isOpen }) => {
   }, [])
 
   return (
-    <div className="grid grid-cols-3 p-6 border-b-2 border-orange-100">
+    <div className="md:flex md:justify-around md:">
+      <div className="grid grid-cols-3 p-6 border-b-2 border-orange-100 ">
       <div className="flex items-center justify-center"> 
-        <button className="rounded-lg p-2 hover:bg-rose-100 transition-all" onClick={ () => redirect(`/about/${user_id}`) }>
+        <button className="md:text-3xl rounded-lg p-2 hover:bg-orange-100 transition-all" onClick={ () => redirect(`/about/${user_id}`) }>
             Hello!
         </button>
       </div>
-      <div className="flex items-center justify-center">
+      <div className="md:text-3xl flex items-center justify-center">
         <button className="rounded-lg p-2 hover:bg-orange-100 transition-all" onClick={ () => isOpen(true) }>
           Menu!
         </button>
       </div>
-      <div className="flex items-center justify-center">
-      { state.log === true ? (
+      <div className="md:text-3xl flex items-center justify-center">
+      { state.log === true || Boolean(localStorage.getItem('isLogged')) === true ? (
         <button className="rounded-lg p-2 hover:bg-orange-100 transition-all" onClick={ () => {
           LogOut();
           redirect('/login');
@@ -47,6 +48,7 @@ export const Header: React.FC<HeaderProps> = ({ isOpen }) => {
           Log in!
         </button>
       ) }
+      </div>
       </div>
     </div>
   )

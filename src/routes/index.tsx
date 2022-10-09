@@ -5,6 +5,7 @@ import { Home } from "../components/home/Home";
 import { Login } from "../components/Login/Login";
 import { ProjectDetails } from "../components/project/ProjectDetails";
 import { Register } from "../components/Register/Register";
+import { Relatories } from "../components/relatories/Relatories";
 import { Task } from "../components/Task/Task";
 
 export const RouterApp: React.FC = () => {
@@ -19,6 +20,7 @@ export const RouterApp: React.FC = () => {
         <Route path="/collab/:user_id" element={ <Collab /> } />
         <Route path="/tasks/:user_id/:project_id/:task_id" element={ <Task /> } />
         <Route path="/about/:user_id" element={ <About /> } />
+        <Route path="/relatories/:user_id" element={ <Relatories /> } />
       </Routes>
     </BrowserRouter>
   )

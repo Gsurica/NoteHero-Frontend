@@ -31,6 +31,8 @@ export const CollabModal: React.FC<CollabModalProps> = ({ modalTitle, closeModal
       .then(response => {
         console.log('User post! ', response.data);
         redirect(`/collab/${user_id}`);
+        closeModal();
+        window.location.reload();
       })
       .catch(err => {
         console.log('error', err.message)
@@ -48,12 +50,12 @@ export const CollabModal: React.FC<CollabModalProps> = ({ modalTitle, closeModal
             { children }
           </div>
           <div className="flex items-center justify-center bg-opacity-100 flex-col">
-            <input className="p-4 mb-6 bg-zinc-100" placeholder="New Tittle" value={ collabName } id="task_name" name="task_name" onChange={ e => {
+            <input className="p-4 mb-6 bg-zinc-100" placeholder="New Collab" value={ collabName } id="task_name" name="task_name" onChange={ e => {
               setCollabName(e.target.value)
             } } />
           </div>
           <div className="flex items-center justify-around">
-            <Button name="Edit Task!" className="p-3" onClick={() => createCollab()} />
+            <Button name="Register Collab!" className="p-3" onClick={() => createCollab()} />
             <Button name="Cancel!" className="p-3" onClick={() => closeModal()} />
           </div>
         </div>
