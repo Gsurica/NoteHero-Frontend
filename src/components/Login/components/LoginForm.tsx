@@ -22,6 +22,7 @@ export const LoginForm = () => {
         const token = response.data.token;
         const user_id = response.data.user.id;
         localStorage.setItem('tokenAccess', token);
+        localStorage.setItem('isLogged', 'true');
         redirect(`/home/${user_id}`);
       })
       .catch(err => {

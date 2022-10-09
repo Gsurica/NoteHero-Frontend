@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { useAppContext } from "../../../contexts/hooks/useAppContext";
 
 interface SideDrawerProps {
   isOpen(state: boolean): void;
@@ -9,6 +10,8 @@ export const SideDrawer: React.FC<SideDrawerProps> = ({ isOpen }) => {
   const redirect = useNavigate();
 
   const { user_id } = useParams();
+
+  const { LogOut } = useAppContext();
 
   return (
     <div className="">
@@ -61,7 +64,10 @@ export const SideDrawer: React.FC<SideDrawerProps> = ({ isOpen }) => {
             </div>
             <div>
               <nav className="flex flex-col mt-2 p-2">
-                <button className="mb-2 bg-orange-100" onClick={() => redirect('')}>
+                <button className="mb-2 bg-orange-100" onClick={() => {
+                  redirect('/login')
+                  LogOut();
+                }}>
                   Log out!
                 </button>
               </nav>
